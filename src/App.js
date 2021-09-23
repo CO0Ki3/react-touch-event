@@ -25,13 +25,18 @@ function App() {
   };
 
   const handleTouchEvent = (e) => {
-    e.preventDefault();
     setIsMenuVisible(!isMenuVisible);
   }
 
   useEffect(() => {
-    console.log("Tablet " + isTablet);
-    console.log("Mobile " + isMobile);
+    if(isMobile || isTablet) {
+      setIsMenuVisible(true);
+      let autoOff = setTimeout(() => {
+        setIsMenuVisible(false)
+      }, 1500);
+
+      return () => clearTimeout(autoOff);
+    }
   }, [isMobile, isTablet]);
 
   return (
