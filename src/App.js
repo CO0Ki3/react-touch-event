@@ -26,23 +26,30 @@ function App() {
 
   const handleTouchEvent = (e) => {
     setIsMenuVisible(!isMenuVisible);
-  }
+  };
 
   useEffect(() => {
-    if(isMobile || isTablet) {
+    if (isMobile || isTablet) {
       setIsMenuVisible(true);
+    }
+  }, [isMobile, isTablet]);
+
+  useEffect(() => {
+    if (isMenuVisible) {
       let autoOff = setTimeout(() => {
-        setIsMenuVisible(false)
+        setIsMenuVisible(false);
       }, 1500);
 
       return () => clearTimeout(autoOff);
     }
-  }, [isMobile, isTablet]);
+  }, [isMenuVisible]);
 
   return (
     <>
       {isMobile || isTablet ? (
-        <Wrapper onTouchStart={handleTouchEvent}>{isMenuVisible ? <Menu /> : <></>}</Wrapper>
+        <Wrapper onTouchStart={handleTouchEvent}>
+          {isMenuVisible ? <Menu /> : <></>}
+        </Wrapper>
       ) : (
         <Wrapper>
           <Button onClick={onClick}>Click Me</Button>
